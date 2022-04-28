@@ -7,7 +7,7 @@ const findAll = async () => {
       return { id: doc.id, ...doc.data() };
     });
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error.message);
   }
 };
 
@@ -18,25 +18,33 @@ const find = async (id) => {
       id: data.id,
       ...data.data(),
     };
-  } catch (error) {}
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
 const create = async (data) => {
   try {
     return await Todos.add(data);
-  } catch (error) {}
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
 const update = async (id, data) => {
   try {
     await Todos.doc(id).update(data);
-  } catch (error) {}
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
 const remove = async (id) => {
   try {
     await Todos.doc(id).delete();
-  } catch (error) {}
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
 module.exports = {

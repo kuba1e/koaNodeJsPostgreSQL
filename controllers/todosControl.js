@@ -6,8 +6,13 @@ const getTodos = async (ctx, next) => {
 
     ctx.body = { data: todos };
 
-    next();
-  } catch (error) {}
+    await next();
+  } catch (error) {
+    ctx.status = error.statusCode || error.status || 500;
+    ctx.body = {
+      message: error.message,
+    };
+  }
 };
 
 const getTodo = async (ctx, next) => {
@@ -15,8 +20,13 @@ const getTodo = async (ctx, next) => {
     const id = ctx.params.id;
     const todo = await Todos.find(id);
     ctx.body = todo;
-    next();
-  } catch (error) {}
+    await next();
+  } catch (error) {
+    ctx.status = error.statusCode || error.status || 500;
+    ctx.body = {
+      message: error.message,
+    };
+  }
 };
 
 const createTodo = async (ctx, next) => {
@@ -26,8 +36,13 @@ const createTodo = async (ctx, next) => {
     if (id) {
       ctx.body = { message: "Todo added successful" };
     }
-    next();
-  } catch (error) {}
+    await next();
+  } catch (error) {
+    ctx.status = error.statusCode || error.status || 500;
+    ctx.body = {
+      message: error.message,
+    };
+  }
 };
 
 const updateTodo = async (ctx, next) => {
@@ -36,8 +51,13 @@ const updateTodo = async (ctx, next) => {
     const id = ctx.params.id;
     await Todos.update(id, data);
     ctx.body = { message: "Todo updated successful" };
-    next();
-  } catch (error) {}
+    await next();
+  } catch (error) {
+    ctx.status = error.statusCode || error.status || 500;
+    ctx.body = {
+      message: error.message,
+    };
+  }
 };
 
 const deleteTodo = async (ctx, next) => {
@@ -45,8 +65,13 @@ const deleteTodo = async (ctx, next) => {
     const id = ctx.params.id;
     await Todos.remove(id);
     ctx.body = { message: "Deleted successful" };
-    next();
-  } catch (error) {}
+    await next();
+  } catch (error) {
+    ctx.status = error.statusCode || error.status || 500;
+    ctx.body = {
+      message: error.message,
+    };
+  }
 };
 
 module.exports = {
