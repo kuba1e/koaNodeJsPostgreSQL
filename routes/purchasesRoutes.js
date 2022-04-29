@@ -3,6 +3,7 @@ const Router = require("@koa/router");
 const {
   getPurchases,
   getCityPurchases,
+  getProductsPurchasesCount,
   createPurchase,
   updatePurchase,
   deletePurchase,
@@ -14,7 +15,9 @@ const router = new Router({
 
 router.get("/", getPurchases);
 
-router.get("/citys", getCityPurchases);
+router.get("cities", getCityPurchases);
+
+router.get("/products", getProductsPurchasesCount);
 
 router.post("/", createPurchase);
 

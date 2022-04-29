@@ -9,21 +9,22 @@ const findAll = async () => {
   }
 };
 
-const find = async (id) => {
-  try {
-    const data = await db.query("SELECT * FROM purchases WHERE id = $1", [id]);
-    return {
-      data: data.rows[0],
-    };
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
 
 const findCityPurchases = async () => {
   try {
     const data = await db.query(
       "SELECT clients.city, purchases.product, purchases.quantity, purchases.date_of_purchasing FROM purchases LEFT JOIN clients on clients.id = purchases.client_id ORDER BY clients.city"
+    );
+    return data.rows;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const findProductsPurchasesCount = async () => {
+  try {
+    const data = await db.query(
+      "SELECT product, COUNT(client_id) AS quantity FROM purchases GROUP BY product"
     );
     return data.rows;
   } catch (error) {
@@ -67,8 +68,8 @@ const remove = async (id) => {
 
 module.exports = {
   findAll,
-  find,
   findCityPurchases,
+  findProductsPurchasesCount,
   create,
   update,
   remove,

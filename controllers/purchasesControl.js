@@ -11,10 +11,9 @@ const getPurchases = async (ctx, next) => {
   }
 };
 
-const getPurchase = async (ctx, next) => {
+const getCityPurchases = async (ctx, next) => {
   try {
-    const id = ctx.params.id;
-    const todo = await Purchases.find(id);
+    const todo = await Purchases.findCityPurchases();
     ctx.body = { message: "Todo found succesful", data: todo };
     await next();
   } catch (error) {
@@ -22,9 +21,9 @@ const getPurchase = async (ctx, next) => {
   }
 };
 
-const getCityPurchases = async (ctx, next) => {
+const getProductsPurchasesCount = async (ctx, next) => {
   try {
-    const todo = await Purchases.findCityPurchases();
+    const todo = await Purchases.findProductsPurchasesCount();
     ctx.body = { message: "Todo found succesful", data: todo };
     await next();
   } catch (error) {
@@ -81,8 +80,8 @@ const deletePurchase = async (ctx, next) => {
 
 module.exports = {
   getPurchases,
-  getPurchase,
   getCityPurchases,
+  getProductsPurchasesCount,
   createPurchase,
   updatePurchase,
   deletePurchase,
