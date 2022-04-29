@@ -2,13 +2,12 @@ const db = require("../db");
 
 const findAll = async () => {
   try {
-    const data = await db.query("SELECT * FROM purchases ORDER BY product");
+    const data = await db.query("SELECT * FROM purchases");
     return data.rows;
   } catch (error) {
     throw new Error(error.message);
   }
 };
-
 
 const findCityPurchases = async () => {
   try {

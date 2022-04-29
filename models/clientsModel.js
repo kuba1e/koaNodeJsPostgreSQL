@@ -32,7 +32,6 @@ const findClientPurchases = async (id) => {
   }
 };
 
-
 const create = async (data) => {
   try {
     const {
