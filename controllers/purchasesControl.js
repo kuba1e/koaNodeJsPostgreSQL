@@ -1,8 +1,8 @@
-const Todos = require("../models/todosModels");
+const Purchases = require("../models/purchasesModel");
 
-const getTodos = async (ctx, next) => {
+const getPurchases = async (ctx, next) => {
   try {
-    const todos = await Todos.findAll();
+    const todos = await Purchases.findAll();
     ctx.body = { message: "Todos found successful", data: todos };
 
     await next();
@@ -11,10 +11,10 @@ const getTodos = async (ctx, next) => {
   }
 };
 
-const getTodo = async (ctx, next) => {
+const getPurchase = async (ctx, next) => {
   try {
     const id = ctx.params.id;
-    const todo = await Todos.find(id);
+    const todo = await Purchases.find(id);
     ctx.body = { message: "Todo found succesful", data: todo };
     await next();
   } catch (error) {
@@ -22,10 +22,20 @@ const getTodo = async (ctx, next) => {
   }
 };
 
-const createTodo = async (ctx, next) => {
+const getClientCityPurchases = async (ctx, next) => {
+  try {
+    const todo = await Purchases.findClientCityPurchases();
+    ctx.body = { message: "Todo found succesful", data: todo };
+    await next();
+  } catch (error) {
+    ctx.app.emit("error", error.message, ctx);
+  }
+};
+
+const createPurchase = async (ctx, next) => {
   try {
     const data = ctx.request.body;
-    const newTodo = await Todos.create(data);
+    const newTodo = await Purchases.create(data);
     if (newTodo) {
       ctx.body = { message: "Todo added successful", data: newTodo.rows[0] };
     }
@@ -36,11 +46,11 @@ const createTodo = async (ctx, next) => {
   }
 };
 
-const updateTodo = async (ctx, next) => {
+const updatePurchase = async (ctx, next) => {
   try {
     const data = ctx.request.body;
     const id = ctx.params.id;
-    const updatedTodo = await Todos.update(id, data);
+    const updatedTodo = await Purchases.update(id, data);
     if (updatedTodo.rows.length) {
       ctx.body = { message: "Todo updated successful" };
     } else {
@@ -53,10 +63,10 @@ const updateTodo = async (ctx, next) => {
   }
 };
 
-const deleteTodo = async (ctx, next) => {
+const deletePurchase = async (ctx, next) => {
   try {
     const id = ctx.params.id;
-    const data = await Todos.remove(id);
+    const data = await Purchases.remove(id);
     if (data.rows.length) {
       ctx.body = { message: "Deleted successful" };
     } else {
@@ -70,9 +80,10 @@ const deleteTodo = async (ctx, next) => {
 };
 
 module.exports = {
-  getTodos,
-  getTodo,
-  createTodo,
-  updateTodo,
-  deleteTodo,
+  getPurchases,
+  getPurchase,
+  getClientCityPurchases,
+  createPurchase,
+  updatePurchase,
+  deletePurchase,
 };
