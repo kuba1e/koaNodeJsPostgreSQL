@@ -20,7 +20,7 @@ const find = async (id) => {
   }
 };
 
-const findClientCityPurchases = async () => {
+const findCityPurchases = async () => {
   try {
     const data = await db.query(
       "SELECT clients.city, purchases.product, purchases.quantity, purchases.date_of_purchasing FROM purchases LEFT JOIN clients on clients.id = purchases.client_id ORDER BY clients.city"
@@ -68,7 +68,7 @@ const remove = async (id) => {
 module.exports = {
   findAll,
   find,
-  findClientCityPurchases,
+  findCityPurchases,
   create,
   update,
   remove,

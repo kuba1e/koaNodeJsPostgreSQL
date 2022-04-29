@@ -22,9 +22,9 @@ const getPurchase = async (ctx, next) => {
   }
 };
 
-const getClientCityPurchases = async (ctx, next) => {
+const getCityPurchases = async (ctx, next) => {
   try {
-    const todo = await Purchases.findClientCityPurchases();
+    const todo = await Purchases.findCityPurchases();
     ctx.body = { message: "Todo found succesful", data: todo };
     await next();
   } catch (error) {
@@ -82,7 +82,7 @@ const deletePurchase = async (ctx, next) => {
 module.exports = {
   getPurchases,
   getPurchase,
-  getClientCityPurchases,
+  getCityPurchases,
   createPurchase,
   updatePurchase,
   deletePurchase,
