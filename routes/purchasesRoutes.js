@@ -15,7 +15,7 @@ const router = new Router({
 
 router.get("/", getPurchases);
 
-router.get("cities", getCityPurchases);
+router.get("/cities", getCityPurchases);
 
 router.get("/products", getProductsPurchasesCount);
 
