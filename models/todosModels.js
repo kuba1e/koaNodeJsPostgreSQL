@@ -1,11 +1,10 @@
 const { Todos } = require("../config");
+const db = require("../db");
 
 const findAll = async () => {
   try {
-    const data = await Todos.get();
-    return data.docs.map((doc) => {
-      return { id: doc.id, ...doc.data() };
-    });
+    const data = await db.query("SELECT * FROM todos ORDER BY label");
+    return data.rows;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -13,10 +12,9 @@ const findAll = async () => {
 
 const find = async (id) => {
   try {
-    const data = await Todos.doc(id).get();
+    const data = await db.query("SELECT * FROM todos WHERE id = $1", [id]);
     return {
-      id: data.id,
-      ...data.data(),
+      data: data.rows[0],
     };
   } catch (error) {
     throw new Error(error.message);
@@ -25,7 +23,11 @@ const find = async (id) => {
 
 const create = async (data) => {
   try {
-    return await Todos.add(data);
+    const { label, done } = data;
+    return await db.query(
+      "INSERT INTO todos (label, done) values ($1, $2) RETURNING *",
+      [label, done]
+    );
   } catch (error) {
     throw new Error(error.message);
   }
@@ -33,7 +35,11 @@ const create = async (data) => {
 
 const update = async (id, data) => {
   try {
-    await Todos.doc(id).update(data);
+    const { label, done } = data;
+    return await db.query(
+      "UPDATE todos SET label = $1, done =$2 WHERE id =$3 RETURNING *",
+      [label, done, id]
+    );
   } catch (error) {
     throw new Error(error.message);
   }
@@ -41,7 +47,7 @@ const update = async (id, data) => {
 
 const remove = async (id) => {
   try {
-    await Todos.doc(id).delete();
+    return await db.query("DELETE from todos WHERE id=$1 RETURNING *", [id]);
   } catch (error) {
     throw new Error(error.message);
   }
