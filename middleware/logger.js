@@ -1,5 +1,4 @@
 const fs = require("fs");
-const chalk = require("chalk");
 
 const getActualRequestTime = (start) => {
   const toNSec = 1e9;
