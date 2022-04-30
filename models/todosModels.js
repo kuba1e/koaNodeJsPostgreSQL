@@ -1,4 +1,3 @@
-const { Todos } = require("../config");
 const db = require("../db");
 
 const findAll = async () => {
