@@ -4,6 +4,7 @@ const {
   getPurchases,
   getCityPurchases,
   getProductsPurchasesCount,
+  getMostLargestPurchase,
   createPurchase,
   updatePurchase,
   deletePurchase,
@@ -16,6 +17,8 @@ const router = new Router({
 router.get("/", getPurchases);
 
 router.get("/cities", getCityPurchases);
+
+router.get('/largest', getMostLargestPurchase)
 
 router.get("/products", getProductsPurchasesCount);
 

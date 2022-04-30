@@ -2,8 +2,8 @@ const Purchases = require("../models/purchasesModel");
 
 const getPurchases = async (ctx, next) => {
   try {
-    const todos = await Purchases.findAll();
-    ctx.body = { message: "Todos found successful", data: todos };
+    const purchase = await Purchases.findAll();
+    ctx.body = { message: "Todos found successful", data: purchase };
 
     await next();
   } catch (error) {
@@ -13,8 +13,8 @@ const getPurchases = async (ctx, next) => {
 
 const getCityPurchases = async (ctx, next) => {
   try {
-    const todo = await Purchases.findCityPurchases();
-    ctx.body = { message: "Todo found succesful", data: todo };
+    const purchase = await Purchases.findCityPurchases();
+    ctx.body = { message: "Todo found succesful", data: purchase };
     await next();
   } catch (error) {
     ctx.app.emit("error", error.message, ctx);
@@ -23,8 +23,18 @@ const getCityPurchases = async (ctx, next) => {
 
 const getProductsPurchasesCount = async (ctx, next) => {
   try {
-    const todo = await Purchases.findProductsPurchasesCount();
-    ctx.body = { message: "Todo found succesful", data: todo };
+    const purchase = await Purchases.findProductsPurchasesCount();
+    ctx.body = { message: "Todo found succesful", data: purchase };
+    await next();
+  } catch (error) {
+    ctx.app.emit("error", error.message, ctx);
+  }
+};
+
+const getMostLargestPurchase = async (ctx, next) => {
+  try {
+    const purchase = await Purchases.findMostLargestPurchase();
+    ctx.body = { message: "Todo found succesful", data: purchase };
     await next();
   } catch (error) {
     ctx.app.emit("error", error.message, ctx);
@@ -34,9 +44,9 @@ const getProductsPurchasesCount = async (ctx, next) => {
 const createPurchase = async (ctx, next) => {
   try {
     const data = ctx.request.body;
-    const newTodo = await Purchases.create(data);
+    const purchase = await Purchases.create(data);
     if (newTodo) {
-      ctx.body = { message: "Todo added successful", data: newTodo.rows[0] };
+      ctx.body = { message: "Todo added successful", data: purchase.rows[0] };
     }
 
     await next();
@@ -49,8 +59,8 @@ const updatePurchase = async (ctx, next) => {
   try {
     const data = ctx.request.body;
     const id = ctx.params.id;
-    const updatedTodo = await Purchases.update(id, data);
-    if (updatedTodo.rows.length) {
+    const purchase = await Purchases.update(id, data);
+    if (purchase.rows.length) {
       ctx.body = { message: "Todo updated successful" };
     } else {
       ctx.body = { message: "Can't find todo with this ID" };
@@ -65,8 +75,8 @@ const updatePurchase = async (ctx, next) => {
 const deletePurchase = async (ctx, next) => {
   try {
     const id = ctx.params.id;
-    const data = await Purchases.remove(id);
-    if (data.rows.length) {
+    const purchase = await Purchases.remove(id);
+    if (purchase.rows.length) {
       ctx.body = { message: "Deleted successful" };
     } else {
       ctx.body = { message: "Can't find todo with this ID" };
@@ -82,6 +92,7 @@ module.exports = {
   getPurchases,
   getCityPurchases,
   getProductsPurchasesCount,
+  getMostLargestPurchase,
   createPurchase,
   updatePurchase,
   deletePurchase,

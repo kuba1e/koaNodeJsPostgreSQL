@@ -31,6 +31,18 @@ const findProductsPurchasesCount = async () => {
   }
 };
 
+const findMostLargestPurchase = async () => {
+  try {
+    const data = await db.query(
+      "SELECT MAX(purchase.quantity) from purchases LEFT JOIN clients ON clients.id"
+    );
+    return data.rows;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+
 const create = async (data) => {
   try {
     const { product, quantity, client_id, date_of_purchasing, city } = data;
@@ -69,6 +81,7 @@ module.exports = {
   findAll,
   findCityPurchases,
   findProductsPurchasesCount,
+  findMostLargestPurchase,
   create,
   update,
   remove,
