@@ -4,12 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "pg:init": "pg_ctl init -D data",
-    "pg:start": "pg_ctl -D data start",
-    "pg:createdb": "createdb -h 127.0.0.1 app",
-    "pg:stop": "pg_ctl -D data stop",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "npm i && nodemon server.js"
   },
   "author": "",
   "license": "ISC",
