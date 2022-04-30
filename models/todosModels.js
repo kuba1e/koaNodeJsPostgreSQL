@@ -2,7 +2,7 @@ const db = require("../db");
 
 const findAll = async () => {
   try {
-    const data = await db.query("SELECT * FROM todos ORDER BY label");
+    const data = await db.query("SELECT * FROM todos");
     return data.rows;
   } catch (error) {
     throw new Error(error.message);
