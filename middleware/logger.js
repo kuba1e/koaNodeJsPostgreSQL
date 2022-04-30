@@ -13,7 +13,7 @@ const logger = (ctx, next) => {
       request: { url, method },
     } = ctx;
     const {
-      response: { status, header },
+      response: { status },
     } = ctx;
 
     const currentDate = new Date();
