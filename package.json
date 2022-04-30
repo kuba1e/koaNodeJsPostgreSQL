@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@koa/cors": "^3.3.0",
     "@koa/router": "^10.1.1",
     "firebase": "^8.10.1",
     "koa": "^2.13.4",
