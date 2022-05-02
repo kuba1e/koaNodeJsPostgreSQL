@@ -1,9 +1,6 @@
 const Router = require("@koa/router");
 
-const authCheck = require("../middleware/authMiddleware");
-
 const {
-  getUsers,
   registration,
   login,
   logout,

@@ -2,7 +2,8 @@ const Todos = require("../models/todosModels");
 
 const getTodos = async (ctx, next) => {
   try {
-    const todos = await Todos.findAll();
+    const { id: userId } = ctx.state.user;
+    const todos = await Todos.findAll(userId);
     ctx.body = { message: "Todos found successful", data: todos };
 
     await next();
@@ -14,7 +15,8 @@ const getTodos = async (ctx, next) => {
 const getTodo = async (ctx, next) => {
   try {
     const id = ctx.params.id;
-    const todo = await Todos.find(id);
+    const { id: userId } = ctx.state.user;
+    const todo = await Todos.find(userId, id);
     ctx.body = { message: "Todo found succesful", data: todo };
     await next();
   } catch (error) {
@@ -24,8 +26,9 @@ const getTodo = async (ctx, next) => {
 
 const createTodo = async (ctx, next) => {
   try {
+    const { id: userId } = ctx.state.user;
     const data = ctx.request.body;
-    const newTodo = await Todos.create(data);
+    const newTodo = await Todos.create(userId, data);
     if (newTodo) {
       ctx.body = { message: "Todo added successful", data: newTodo.rows[0] };
     }
@@ -40,7 +43,9 @@ const updateTodo = async (ctx, next) => {
   try {
     const data = ctx.request.body;
     const id = ctx.params.id;
-    const updatedTodo = await Todos.update(id, data);
+    const { id: userId } = ctx.state.user;
+
+    const updatedTodo = await Todos.update(userId, id, data);
     if (updatedTodo.rows.length) {
       ctx.body = { message: "Todo updated successful" };
     } else {
@@ -56,7 +61,9 @@ const updateTodo = async (ctx, next) => {
 const updateAllTodo = async (ctx, next) => {
   try {
     const data = ctx.request.body;
-    const updatedTodo = await Todos.updateAll(data);
+    const { id: userId } = ctx.state.user;
+
+    const updatedTodo = await Todos.updateAll(userId, data);
     if (updatedTodo.rows.length) {
       ctx.body = { message: "Todo updated successful" };
     } else {
@@ -72,7 +79,9 @@ const updateAllTodo = async (ctx, next) => {
 const deleteTodo = async (ctx, next) => {
   try {
     const id = ctx.params.id;
-    const data = await Todos.remove(id);
+    const { id: userId } = ctx.state.user;
+
+    const data = await Todos.remove(userId, id);
     if (data.rows.length) {
       ctx.body = { message: "Deleted successful" };
     } else {

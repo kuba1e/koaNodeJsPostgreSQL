@@ -12,9 +12,6 @@ const logger = async (ctx, next) => {
     const {
       request: { url, method },
     } = ctx;
-    const {
-      response: { status },
-    } = ctx;
 
     const currentDate = new Date();
     let formatedDate =
@@ -32,7 +29,7 @@ const logger = async (ctx, next) => {
     const start = process.hrtime();
     const requestDuration = getActualRequestTime(start);
 
-    const log = `[${formatedDate}] method=${method} path="${url}" status=${status} request-duration=${
+    const log = `[${formatedDate}] method=${method} path="${url}" request-duration=${
       requestDuration + "ms"
     }`;
 

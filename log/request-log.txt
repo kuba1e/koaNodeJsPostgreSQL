@@ -547,3 +547,146 @@
 [2022-5-2 15:22:52] method=POST path="/login" status=404 request-duration=0.0012ms
 [2022-5-2 15:22:54] method=GET path="/refresh" status=404 request-duration=0.0019ms
 [2022-5-2 15:22:54] method=GET path="/todos" status=404 request-duration=0.0016ms
+[2022-5-2 15:44:31] method=GET path="/refresh" status=404 request-duration=0.0254ms
+[2022-5-2 15:44:31] method=GET path="/todos" status=404 request-duration=0.0041ms
+[2022-5-2 15:44:46] method=GET path="/refresh" status=404 request-duration=0.0025ms
+[2022-5-2 15:44:46] method=GET path="/todos" status=404 request-duration=0.0033ms
+[2022-5-2 15:45:16] method=GET path="/refresh" status=404 request-duration=0.0053ms
+[2022-5-2 15:45:16] method=GET path="/todos" status=404 request-duration=0.0043ms
+[2022-5-2 15:45:17] method=GET path="/refresh" status=404 request-duration=0.0045ms
+[2022-5-2 15:45:17] method=GET path="/todos" status=404 request-duration=0.0034ms
+[2022-5-2 15:45:19] method=GET path="/refresh" status=404 request-duration=0.0075ms
+[2022-5-2 15:45:19] method=GET path="/todos" status=404 request-duration=0.0213ms
+[2022-5-2 15:45:24] method=GET path="/refresh" status=404 request-duration=0.002ms
+[2022-5-2 15:45:24] method=GET path="/todos" status=404 request-duration=0.0024ms
+[2022-5-2 15:48:43] method=GET path="/refresh" status=404 request-duration=0.0014ms
+[2022-5-2 15:48:43] method=GET path="/todos" status=404 request-duration=0.0025ms
+[2022-5-2 15:48:45] method=POST path="/logout" status=404 request-duration=0.0017ms
+[2022-5-2 15:48:50] method=GET path="/todos" status=404 request-duration=0.0019ms
+[2022-5-2 15:49:3] method=POST path="/login" status=404 request-duration=0.0022ms
+[2022-5-2 15:49:25] method=POST path="/login" status=404 request-duration=0.0015ms
+[2022-5-2 15:50:40] method=GET path="/refresh" status=404 request-duration=0.0261ms
+[2022-5-2 15:50:40] method=GET path="/todos" status=404 request-duration=0.0031ms
+[2022-5-2 15:51:46] method=GET path="/refresh" status=404 request-duration=0.0024ms
+[2022-5-2 15:51:46] method=GET path="/todos" status=404 request-duration=0.003ms
+[2022-5-2 15:51:53] method=POST path="/todos" status=404 request-duration=0.0033ms
+[2022-5-2 15:52:47] method=GET path="/refresh" status=404 request-duration=0.0317ms
+[2022-5-2 15:52:47] method=GET path="/todos" status=404 request-duration=0.0038ms
+[2022-5-2 15:52:52] method=DELETE path="/todos/32" status=404 request-duration=0.0025ms
+[2022-5-2 15:52:54] method=DELETE path="/todos/33" status=404 request-duration=0.0034ms
+[2022-5-2 15:53:2] method=DELETE path="/todos/34" status=404 request-duration=0.0033ms
+[2022-5-2 15:53:3] method=DELETE path="/todos/35" status=404 request-duration=0.0031ms
+[2022-5-2 15:53:7] method=PUT path="/todos/36" status=404 request-duration=0.0036ms
+[2022-5-2 15:53:9] method=PUT path="/todos/36" status=404 request-duration=0.0033ms
+[2022-5-2 15:53:11] method=DELETE path="/todos/36" status=404 request-duration=0.0048ms
+[2022-5-2 15:53:13] method=DELETE path="/todos/37" status=404 request-duration=0.0167ms
+[2022-5-2 15:53:15] method=DELETE path="/todos/39" status=404 request-duration=0.0019ms
+[2022-5-2 15:53:17] method=POST path="/todos" status=404 request-duration=0.0019ms
+[2022-5-2 15:53:21] method=POST path="/todos" status=404 request-duration=0.0018ms
+[2022-5-2 15:53:23] method=PUT path="/todos" status=404 request-duration=0.0014ms
+[2022-5-2 15:53:25] method=GET path="/refresh" status=404 request-duration=0.003ms
+[2022-5-2 15:53:25] method=GET path="/todos" status=404 request-duration=0.0016ms
+[2022-5-2 15:53:36] method=GET path="/refresh" status=404 request-duration=0.0016ms
+[2022-5-2 15:53:36] method=GET path="/todos" status=404 request-duration=0.0015ms
+[2022-5-2 15:53:46] method=PUT path="/todos" status=404 request-duration=0.0014ms
+[2022-5-2 15:53:48] method=GET path="/refresh" status=404 request-duration=0.0015ms
+[2022-5-2 15:53:48] method=GET path="/todos" status=404 request-duration=0.0013ms
+[2022-5-2 15:54:9] method=POST path="/registration" status=404 request-duration=0.0015ms
+[2022-5-2 15:54:17] method=POST path="/login" status=404 request-duration=0.0018ms
+[2022-5-2 15:54:23] method=GET path="/refresh" status=404 request-duration=0.0012ms
+[2022-5-2 15:54:23] method=GET path="/todos" status=404 request-duration=0.0027ms
+[2022-5-2 16:13:2] method=GET path="/refresh" status=404 request-duration=0.0436ms
+[2022-5-2 16:13:2] method=GET path="/todos" status=404 request-duration=0.0028ms
+[2022-5-2 16:13:29] method=GET path="/refresh" status=404 request-duration=0.0492ms
+[2022-5-2 16:13:29] method=GET path="/todos" status=404 request-duration=0.0033ms
+[2022-5-2 16:33:49] method=GET path="/refresh" status=404 request-duration=0.0267ms
+[2022-5-2 16:33:49] method=GET path="/todos" status=404 request-duration=0.0046ms
+[2022-5-2 16:33:54] method=POST path="/todos" status=404 request-duration=0.0032ms
+[2022-5-2 16:34:12] method=GET path="/refresh" status=404 request-duration=0.0035ms
+[2022-5-2 16:34:12] method=GET path="/todos" status=404 request-duration=0.0032ms
+[2022-5-2 16:34:13] method=GET path="/refresh" status=404 request-duration=0.0035ms
+[2022-5-2 16:34:13] method=GET path="/todos" status=404 request-duration=0.0037ms
+[2022-5-2 16:34:20] method=PUT path="/todos/43" status=404 request-duration=0.0038ms
+[2022-5-2 16:34:22] method=GET path="/refresh" status=404 request-duration=0.0058ms
+[2022-5-2 16:34:22] method=GET path="/todos" status=404 request-duration=0.0142ms
+[2022-5-2 16:34:27] method=DELETE path="/todos/43" status=404 request-duration=0.0016ms
+[2022-5-2 16:34:56] method=GET path="/refresh" status=404 request-duration=0.0252ms
+[2022-5-2 16:34:56] method=GET path="/todos" status=404 request-duration=0.0031ms
+[2022-5-2 16:34:58] method=DELETE path="/todos/43" status=404 request-duration=0.0036ms
+[2022-5-2 16:35:0] method=GET path="/refresh" status=404 request-duration=0.0037ms
+[2022-5-2 16:35:0] method=GET path="/todos" status=404 request-duration=0.0029ms
+[2022-5-2 16:35:4] method=POST path="/todos" status=404 request-duration=0.0034ms
+[2022-5-2 16:35:5] method=POST path="/todos" status=404 request-duration=0.0037ms
+[2022-5-2 16:35:8] method=POST path="/todos" status=404 request-duration=0.0032ms
+[2022-5-2 16:35:11] method=POST path="/logout" status=404 request-duration=0.0027ms
+[2022-5-2 16:35:14] method=GET path="/todos" status=404 request-duration=0.0151ms
+[2022-5-2 16:35:30] method=POST path="/login" status=404 request-duration=0.0016ms
+[2022-5-2 16:35:41] method=POST path="/login" status=404 request-duration=0.0013ms
+[2022-5-2 16:35:43] method=GET path="/refresh" status=404 request-duration=0.0014ms
+[2022-5-2 16:35:43] method=GET path="/todos" status=404 request-duration=0.0017ms
+[2022-5-2 16:35:44] method=GET path="/refresh" status=404 request-duration=0.0028ms
+[2022-5-2 16:35:44] method=GET path="/todos" status=404 request-duration=0.0014ms
+[2022-5-2 16:35:45] method=GET path="/refresh" status=404 request-duration=0.0016ms
+[2022-5-2 16:35:45] method=GET path="/todos" status=404 request-duration=0.0016ms
+[2022-5-2 16:35:46] method=GET path="/refresh" status=404 request-duration=0.0014ms
+[2022-5-2 16:35:46] method=GET path="/todos" status=404 request-duration=0.0012ms
+[2022-5-2 16:35:58] method=GET path="/refresh" status=404 request-duration=0.0024ms
+[2022-5-2 16:35:58] method=GET path="/todos" status=404 request-duration=0.0014ms
+[2022-5-2 16:36:43] method=GET path="/refresh" status=404 request-duration=0.0014ms
+[2022-5-2 16:36:43] method=GET path="/todos" status=404 request-duration=0.0017ms
+[2022-5-2 16:36:45] method=GET path="/refresh" status=404 request-duration=0.0014ms
+[2022-5-2 16:36:45] method=GET path="/todos" status=404 request-duration=0.0013ms
+[2022-5-2 16:39:12] method=GET path="/refresh" status=404 request-duration=0.0253ms
+[2022-5-2 16:39:12] method=GET path="/todos" status=404 request-duration=0.0034ms
+[2022-5-2 16:40:10] method=POST path="/todos" status=404 request-duration=0.0035ms
+[2022-5-2 16:40:13] method=POST path="/todos" status=404 request-duration=0.0035ms
+[2022-5-2 16:40:39] method=GET path="/refresh" status=404 request-duration=0.0049ms
+[2022-5-2 16:40:39] method=GET path="/todos" status=404 request-duration=0.0042ms
+[2022-5-2 16:40:59] method=POST path="/login" status=404 request-duration=0.0027ms
+[2022-5-2 16:41:32] method=GET path="/refresh" status=404 request-duration=0.0032ms
+[2022-5-2 16:41:32] method=GET path="/todos" status=404 request-duration=0.0033ms
+[2022-5-2 16:41:35] method=POST path="/todos" status=404 request-duration=0.0108ms
+[2022-5-2 16:41:37] method=POST path="/todos" status=404 request-duration=0.0019ms
+[2022-5-2 16:41:39] method=POST path="/todos" status=404 request-duration=0.0021ms
+[2022-5-2 16:41:41] method=POST path="/todos" status=404 request-duration=0.0013ms
+[2022-5-2 16:41:43] method=POST path="/todos" status=404 request-duration=0.0013ms
+[2022-5-2 16:41:52] method=POST path="/logout" status=404 request-duration=0.0011ms
+[2022-5-2 16:41:54] method=GET path="/todos" status=404 request-duration=0.0014ms
+[2022-5-2 16:42:10] method=POST path="/login" status=404 request-duration=0.0021ms
+[2022-5-2 16:42:16] method=GET path="/refresh" status=404 request-duration=0.0013ms
+[2022-5-2 16:42:16] method=GET path="/todos" status=404 request-duration=0.0023ms
+[2022-5-2 17:3:6] method=GET path="/refresh" status=404 request-duration=0.0258ms
+[2022-5-2 17:3:6] method=GET path="/todos" status=404 request-duration=0.0028ms
+[2022-5-2 17:4:49] method=GET path="/refresh" status=404 request-duration=0.0317ms
+[2022-5-2 17:4:49] method=GET path="/todos" status=404 request-duration=0.0032ms
+[2022-5-2 17:5:29] method=GET path="/refresh" request-duration=0.0519ms
+[2022-5-2 17:5:29] method=GET path="/todos" request-duration=0.0027ms
+[2022-5-2 17:11:45] method=GET path="/refresh" request-duration=0.0316ms
+[2022-5-2 17:11:45] method=GET path="/todos" request-duration=0.0054ms
+[2022-5-2 17:11:49] method=POST path="/logout" request-duration=0.0037ms
+[2022-5-2 17:11:55] method=GET path="/todos" request-duration=0.0033ms
+[2022-5-2 17:12:25] method=POST path="/login" request-duration=0.0031ms
+[2022-5-2 17:12:28] method=GET path="/refresh" request-duration=0.0036ms
+[2022-5-2 17:12:28] method=GET path="/todos" request-duration=0.0031ms
+[2022-5-2 17:12:49] method=GET path="/refresh" request-duration=0.0036ms
+[2022-5-2 17:12:49] method=GET path="/todos" request-duration=0.004ms
+[2022-5-2 17:28:23] method=GET path="/refresh" request-duration=0.0284ms
+[2022-5-2 17:28:23] method=GET path="/todos" request-duration=0.0031ms
+[2022-5-2 17:29:21] method=GET path="/refresh" request-duration=0.0048ms
+[2022-5-2 17:29:21] method=GET path="/todos" request-duration=0.0051ms
+[2022-5-2 17:29:34] method=GET path="/refresh" request-duration=0.0034ms
+[2022-5-2 17:29:34] method=GET path="/todos" request-duration=0.0044ms
+[2022-5-2 17:29:49] method=GET path="/refresh" request-duration=0.0032ms
+[2022-5-2 17:29:49] method=GET path="/todos" request-duration=0.0038ms
+[2022-5-2 17:30:4] method=GET path="/refresh" request-duration=0.0275ms
+[2022-5-2 17:30:4] method=GET path="/todos" request-duration=0.0037ms
+[2022-5-2 17:30:27] method=GET path="/refresh" request-duration=0.0255ms
+[2022-5-2 17:30:27] method=GET path="/todos" request-duration=0.004ms
+[2022-5-2 17:30:34] method=GET path="/refresh" request-duration=0.0031ms
+[2022-5-2 17:30:34] method=GET path="/todos" request-duration=0.0037ms
+[2022-5-2 17:30:36] method=GET path="/refresh" request-duration=0.0034ms
+[2022-5-2 17:30:36] method=GET path="/todos" request-duration=0.0058ms
+[2022-5-2 17:30:38] method=POST path="/logout" request-duration=0.0031ms
+[2022-5-2 17:30:52] method=POST path="/login" request-duration=0.0032ms
+[2022-5-2 17:30:55] method=GET path="/refresh" request-duration=0.0069ms
+[2022-5-2 17:30:55] method=GET path="/todos" request-duration=0.0171ms

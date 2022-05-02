@@ -4,19 +4,22 @@ const {
   userLogin,
   userLogout,
   userRefreshToken,
-  getAllUsers,
-} = require("../service/userService");
+} = require("../models/userModel");
+
+const sendResponseWithCookies = (message, data, ctx) => {
+  ctx.body = { message, data };
+  ctx.cookies.set("refreshToken", data.refreshToken, {
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+  });
+};
 
 const registration = async (ctx, next) => {
   try {
     const { email, password } = ctx.request.body;
     const userData = await userRegistration(email, password);
 
-    ctx.body = { message: "User was added successful", data: userData };
-    ctx.cookies.set("refreshToken", userData.refreshToken, {
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-    });
+    sendResponseWithCookies("User was added successful", userData, ctx);
+
     await next();
   } catch (error) {
     ctx.app.emit("error", error.message, ctx);
@@ -29,12 +32,7 @@ const login = async (ctx, next) => {
 
     const userData = await userLogin(email, password);
 
-    ctx.body = { message: "User was logined successful", data: userData };
-
-    ctx.cookies.set("refreshToken", userData.refreshToken, {
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-    });
+    sendResponseWithCookies("User was logined successful", userData, ctx);
 
     await next();
   } catch (error) {
@@ -46,13 +44,10 @@ const logout = async (ctx, next) => {
   try {
     const refreshToken = ctx.cookies.get("refreshToken");
 
-    console.log(refreshToken)
-
-    const token = await userLogout(refreshToken);
+    await userLogout(refreshToken);
 
     ctx.cookies.set("refreshToken", "");
-
-    ctx.body = { message: "Logout succesful", data: token };
+    ctx.body = { message: "Logout succesful" };
 
     await next();
   } catch (error) {
@@ -79,22 +74,7 @@ const refresh = async (ctx, next) => {
 
     const userData = await userRefreshToken(refreshToken);
 
-    ctx.body = { message: "Token was updated successful", data: userData };
-    ctx.cookies.set("refreshToken", userData.refreshToken, {
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-    });
-
-    await next();
-  } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
-  }
-};
-
-const getUsers = async (ctx, next) => {
-  try {
-    const users = await getAllUsers();
-    ctx.body = { message: "Users found successful", data: users };
+    sendResponseWithCookies("Token was updated successful", userData, ctx);
 
     await next();
   } catch (error) {
@@ -103,7 +83,6 @@ const getUsers = async (ctx, next) => {
 };
 
 module.exports = {
-  getUsers,
   registration,
   login,
   logout,

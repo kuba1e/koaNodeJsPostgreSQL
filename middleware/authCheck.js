@@ -1,4 +1,4 @@
-const { validateAccessToken } = require("../service/tokenService");
+const { validateAccessToken } = require("../models/tokenModel");
 
 const authCheck = async (ctx, next) => {
   try {
@@ -12,9 +12,6 @@ const authCheck = async (ctx, next) => {
     if (!accessToken) {
       throw new Error("User is unauthorized");
     }
-
-    console.log(accessToken)
-
 
     const userData = await validateAccessToken(accessToken);
 

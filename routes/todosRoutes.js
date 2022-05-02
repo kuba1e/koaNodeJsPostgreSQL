@@ -1,6 +1,6 @@
 const Router = require("@koa/router");
 
-const authCheck = require("../middleware/authMiddleware");
+const authCheck = require("../middleware/authCheck");
 
 const {
   getTodos,
@@ -17,14 +17,14 @@ const router = new Router({
 
 router.get("/", authCheck, getTodos);
 
-router.get("/:id", getTodo);
+router.get("/:id", authCheck, getTodo);
 
-router.post("/", createTodo);
+router.post("/", authCheck, createTodo);
 
-router.put("/", updateAllTodo);
+router.put("/", authCheck, updateAllTodo);
 
-router.put("/:id", updateTodo);
+router.put("/:id", authCheck, updateTodo);
 
-router.delete("/:id", deleteTodo);
+router.delete("/:id", authCheck, deleteTodo);
 
 module.exports = router;
