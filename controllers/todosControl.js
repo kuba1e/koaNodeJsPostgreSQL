@@ -53,6 +53,22 @@ const updateTodo = async (ctx, next) => {
   }
 };
 
+const updateAllTodo = async (ctx, next) => {
+  try {
+    const data = ctx.request.body;
+    const updatedTodo = await Todos.updateAll(data);
+    if (updatedTodo.rows.length) {
+      ctx.body = { message: "Todo updated successful" };
+    } else {
+      ctx.body = { message: "Can't find todo with this ID" };
+    }
+
+    await next();
+  } catch (error) {
+    ctx.app.emit("error", error.message, ctx);
+  }
+};
+
 const deleteTodo = async (ctx, next) => {
   try {
     const id = ctx.params.id;
@@ -74,5 +90,6 @@ module.exports = {
   getTodo,
   createTodo,
   updateTodo,
+  updateAllTodo,
   deleteTodo,
 };

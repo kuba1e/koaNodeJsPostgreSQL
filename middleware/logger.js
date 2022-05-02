@@ -7,7 +7,7 @@ const getActualRequestTime = (start) => {
   return (diff[0] * toNSec + diff[1]) / toMSec;
 };
 
-const logger = (ctx, next) => {
+const logger = async (ctx, next) => {
   try {
     const {
       request: { url, method },
@@ -32,9 +32,7 @@ const logger = (ctx, next) => {
     const start = process.hrtime();
     const requestDuration = getActualRequestTime(start);
 
-    const log = `[${formatedDate}] method=${
-      method
-    } path="${url}" status=${status} request-duration=${
+    const log = `[${formatedDate}] method=${method} path="${url}" status=${status} request-duration=${
       requestDuration + "ms"
     }`;
 
@@ -46,9 +44,9 @@ const logger = (ctx, next) => {
 
     console.log(log);
 
-    next();
+    await next();
   } catch (error) {
-    ctx.app.emit("error", error, ctx);
+    ctx.app.emit("error", error.message, ctx);
   }
 };
 

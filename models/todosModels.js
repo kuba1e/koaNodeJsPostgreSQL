@@ -2,7 +2,7 @@ const db = require("../db");
 
 const findAll = async () => {
   try {
-    const data = await db.query("SELECT * FROM todos");
+    const data = await db.query("SELECT * FROM todos ORDER BY id");
     return data.rows;
   } catch (error) {
     throw new Error(error.message);
@@ -44,6 +44,15 @@ const update = async (id, data) => {
   }
 };
 
+const updateAll = async (data) => {
+  try {
+    const { done } = data;
+    return await db.query("UPDATE todos SET done =$1  RETURNING *", [done]);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const remove = async (id) => {
   try {
     return await db.query("DELETE from todos WHERE id=$1 RETURNING *", [id]);
@@ -57,5 +66,6 @@ module.exports = {
   find,
   create,
   update,
+  updateAll,
   remove,
 };
