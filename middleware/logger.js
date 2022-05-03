@@ -1,5 +1,11 @@
 const fs = require("fs");
 
+setInterval(() => {
+  fs.rmSync("log/request-log.txt", {
+    force: true,
+  });
+}, 30 * 24 * 60 * 60 * 1000);
+
 const getActualRequestTime = (start) => {
   const toNSec = 1e9;
   const toMSec = 1e6;
