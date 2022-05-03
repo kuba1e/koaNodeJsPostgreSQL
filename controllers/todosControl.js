@@ -94,6 +94,23 @@ const deleteTodo = async (ctx, next) => {
   }
 };
 
+const deleteCompletedTodo = async (ctx, next) => {
+  try {
+    const { id: userId } = ctx.state.user;
+    const { todos: todosToDelete } = ctx.request.body;
+
+    todosToDelete.map(async (id) => {
+      return await Todos.remove(userId, id);
+    });
+
+    ctx.body = { message: "Deleted successful" };
+
+    await next();
+  } catch (error) {
+    ctx.app.emit("error", error.message, ctx);
+  }
+};
+
 module.exports = {
   getTodos,
   getTodo,
@@ -101,4 +118,5 @@ module.exports = {
   updateTodo,
   updateAllTodo,
   deleteTodo,
+  deleteCompletedTodo,
 };

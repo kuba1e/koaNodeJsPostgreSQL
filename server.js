@@ -26,11 +26,14 @@ app.use(authorizationRoutes.routes()).use(authorizationRoutes.allowedMethods());
 
 app.on("error", (error, ctx) => {
   ctx.status = error.statusCode || error.status || 500;
+
   ctx.body = {
     message: error,
   };
   console.log(error);
 });
+
+
 
 app.listen(PORT, () => {
   console.log("server has been started");

@@ -9,6 +9,7 @@ const {
   updateTodo,
   updateAllTodo,
   deleteTodo,
+  deleteCompletedTodo,
 } = require("../controllers/todosControl");
 
 const router = new Router({
@@ -24,6 +25,8 @@ router.post("/", authCheck, createTodo);
 router.put("/", authCheck, updateAllTodo);
 
 router.put("/:id", authCheck, updateTodo);
+
+router.delete("/", authCheck, deleteCompletedTodo);
 
 router.delete("/:id", authCheck, deleteTodo);
 

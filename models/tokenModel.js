@@ -76,6 +76,7 @@ const validateRefreshToken = async (refreshToken) => {
 
 const findToken = async (token) => {
   try {
+    console.log(token);
     const tokenData = await db.query(
       "SELECT * FROM token WHERE refresh_token = $1",
       [token]

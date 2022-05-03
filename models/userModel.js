@@ -131,6 +131,7 @@ const userRefreshToken = async (refreshToken) => {
       throw new Error("User is unauthorized");
     }
 
+
     const userData = await validateRefreshToken(refreshToken);
     const tokenFromDb = await findToken(refreshToken);
 
