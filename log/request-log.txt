@@ -1,0 +1,9 @@
+[2022-5-3 18:43:51] method=GET path="/refresh" request-duration=0.0246ms
+[2022-5-3 18:43:51] method=GET path="/todos" request-duration=0.0032ms
+[2022-5-3 18:43:52] method=PUT path="/todos" request-duration=0.0034ms
+[2022-5-3 18:43:53] method=GET path="/refresh" request-duration=0.0034ms
+[2022-5-3 18:43:53] method=GET path="/todos" request-duration=0.0032ms
+[2022-5-3 18:43:53] method=PUT path="/todos" request-duration=0.0032ms
+[2022-5-3 18:44:6] method=GET path="/refresh" request-duration=0.0065ms
+[2022-5-3 18:44:6] method=GET path="/todos" request-duration=0.0033ms
+[2022-5-3 18:44:6] method=PUT path="/todos" request-duration=0.003ms
