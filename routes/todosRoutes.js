@@ -16,18 +16,20 @@ const router = new Router({
   prefix: "/todos",
 });
 
-router.get("/", authCheck, getTodos);
+router.use(authCheck);
 
-router.get("/:id", authCheck, getTodo);
+router.get("/", getTodos);
 
-router.post("/", authCheck, createTodo);
+router.get("/:id", getTodo);
 
-router.put("/", authCheck, updateAllTodo);
+router.post("/", createTodo);
 
-router.put("/:id", authCheck, updateTodo);
+router.put("/", updateAllTodo);
 
-router.delete("/", authCheck, deleteCompletedTodo);
+router.put("/:id", updateTodo);
 
-router.delete("/:id", authCheck, deleteTodo);
+router.delete("/", deleteCompletedTodo);
+
+router.delete("/:id", deleteTodo);
 
 module.exports = router;

@@ -69,6 +69,10 @@ const userActivation = async (activationLink) => {
       throw new Error("Wrong activation link");
     }
 
+    if (user.rows[0].is_activated) {
+      throw new Error("User was already activated");
+    }
+
     await db.query(
       "UPDATE users SET is_activated =$1 WHERE activation_link= $2",
       [true, activationLink]
@@ -130,7 +134,6 @@ const userRefreshToken = async (refreshToken) => {
     if (!refreshToken) {
       throw new Error("User is unauthorized");
     }
-
 
     const userData = await validateRefreshToken(refreshToken);
     const tokenFromDb = await findToken(refreshToken);
