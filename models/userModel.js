@@ -131,13 +131,15 @@ const userLogout = async (refreshToken) => {
 
 const userRefreshToken = async (refreshToken) => {
   try {
+    console.log(refreshToken);
+
     if (!refreshToken) {
       throw new Error("User is unauthorized");
     }
 
     const userData = await validateRefreshToken(refreshToken);
-    const tokenFromDb = await findToken(refreshToken);
-
+    const tokenFromDb = await findToken(userData.id);
+    
     if (!userData || !tokenFromDb) {
       throw new Error("User is unauthorized");
     }

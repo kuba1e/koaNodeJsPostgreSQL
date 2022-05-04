@@ -7,7 +7,7 @@ const jwtRefreshSecreKey = "this is an another secret key  ";
 
 const generateTokens = (payload) => {
   const accessToken = jwt.sign(payload, jwtAccessSecretKey, {
-    expiresIn: "30m",
+    expiresIn: "20s",
   });
 
   const refreshToken = jwt.sign(payload, jwtRefreshSecreKey, {
@@ -56,28 +56,29 @@ const removeToken = async (refreshToken) => {
   }
 };
 
-const validateAccessToken = async (accessToken) => {
+const validateAccessToken = async (accessToken, ctx) => {
   try {
     const userData = jwt.verify(accessToken, jwtAccessSecretKey);
     return userData;
   } catch (error) {
-    throw new Error(error.message);
+    ctx.throw(401, error.message);
   }
 };
 
-const validateRefreshToken = async (refreshToken) => {
+const validateRefreshToken = async (refreshToken, ctx) => {
   try {
     const userData = jwt.verify(refreshToken, jwtRefreshSecreKey);
+
     return userData;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error);
   }
 };
 
 const findToken = async (token) => {
   try {
     const tokenData = await db.query(
-      "SELECT * FROM token WHERE refresh_token = $1",
+      "SELECT * FROM token WHERE user_id = $1",
       [token]
     );
 

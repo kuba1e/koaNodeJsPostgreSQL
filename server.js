@@ -27,9 +27,9 @@ app.use(authorizationRoutes.routes()).use(authorizationRoutes.allowedMethods());
 app.on("error", (error, ctx) => {
   ctx.status = error.statusCode || error.status || 500;
   ctx.body = {
-    message: error,
+    message: error.message,
   };
-  console.log(error);
+ // console.log(error);
 });
 
 app.listen(PORT, () => {

@@ -22,7 +22,7 @@ const registration = async (ctx, next) => {
 
     await next();
   } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
+    ctx.app.emit("error", error, ctx);
   }
 };
 
@@ -36,7 +36,7 @@ const login = async (ctx, next) => {
 
     await next();
   } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
+    ctx.app.emit("error", error, ctx);
   }
 };
 
@@ -51,7 +51,7 @@ const logout = async (ctx, next) => {
 
     await next();
   } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
+    ctx.app.emit("error", error, ctx);
   }
 };
 
@@ -64,7 +64,7 @@ const activate = async (ctx, next) => {
 
     await next();
   } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
+    ctx.app.emit("error", error, ctx);
   }
 };
 
@@ -72,13 +72,14 @@ const refresh = async (ctx, next) => {
   try {
     const refreshToken = ctx.cookies.get("refreshToken");
 
-    const userData = await userRefreshToken(refreshToken);
+    const userData = await userRefreshToken(refreshToken, ctx);
 
     sendResponseWithCookies("Token was updated successful", userData, ctx);
 
     await next();
   } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
+   console.log(error)
+    ctx.app.emit("error", error, ctx);
   }
 };
 

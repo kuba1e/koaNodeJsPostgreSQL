@@ -8,7 +8,7 @@ const getTodos = async (ctx, next) => {
 
     await next();
   } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
+    ctx.app.emit("error", error, ctx);
   }
 };
 
@@ -20,7 +20,7 @@ const getTodo = async (ctx, next) => {
     ctx.body = { message: "Todo found succesful", data: todo };
     await next();
   } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
+    ctx.app.emit("error", error, ctx);
   }
 };
 
@@ -35,7 +35,7 @@ const createTodo = async (ctx, next) => {
 
     await next();
   } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
+    ctx.app.emit("error", error, ctx);
   }
 };
 
@@ -54,7 +54,7 @@ const updateTodo = async (ctx, next) => {
 
     await next();
   } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
+    ctx.app.emit("error", error, ctx);
   }
 };
 
@@ -72,7 +72,7 @@ const updateAllTodo = async (ctx, next) => {
 
     await next();
   } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
+    ctx.app.emit("error", error, ctx);
   }
 };
 
@@ -90,7 +90,7 @@ const deleteTodo = async (ctx, next) => {
 
     await next();
   } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
+    ctx.app.emit("error", error, ctx);
   }
 };
 
@@ -107,7 +107,7 @@ const deleteCompletedTodo = async (ctx, next) => {
 
     await next();
   } catch (error) {
-    ctx.app.emit("error", error.message, ctx);
+    ctx.app.emit("error", error, ctx);
   }
 };
 
