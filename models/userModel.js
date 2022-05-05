@@ -131,8 +131,6 @@ const userLogout = async (refreshToken) => {
 
 const userRefreshToken = async (refreshToken) => {
   try {
-    console.log(refreshToken);
-
     if (!refreshToken) {
       throw new Error("User is unauthorized");
     }

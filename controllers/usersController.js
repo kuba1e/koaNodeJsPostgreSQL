@@ -6,9 +6,10 @@ const {
   userRefreshToken,
 } = require("../models/userModel");
 
-const sendResponseWithCookies = (message, data, ctx) => {
+const sendResponseWithCookies = async (message, data, ctx) => {
   ctx.body = { message, data };
-  ctx.cookies.set("refreshToken", data.refreshToken, {
+  console.log(data.refreshToken)
+  await ctx.cookies.set("refreshToken", data.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
   });
 };
@@ -74,11 +75,15 @@ const refresh = async (ctx, next) => {
 
     const userData = await userRefreshToken(refreshToken, ctx);
 
-    sendResponseWithCookies("Token was updated successful", userData, ctx);
+    await sendResponseWithCookies(
+      "Token was updated successful",
+      userData,
+      ctx
+    );
 
     await next();
   } catch (error) {
-   console.log(error)
+    console.log(error);
     ctx.app.emit("error", error, ctx);
   }
 };
