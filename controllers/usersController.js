@@ -6,10 +6,9 @@ const {
   userRefreshToken,
 } = require("../models/userModel");
 
-const sendResponseWithCookies = async (message, data, ctx) => {
+const sendResponseWithCookies = (message, data, ctx) => {
   ctx.body = { message, data };
-  console.log(data.refreshToken)
-  await ctx.cookies.set("refreshToken", data.refreshToken, {
+  ctx.cookies.set("refreshToken", data.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
   });
 };

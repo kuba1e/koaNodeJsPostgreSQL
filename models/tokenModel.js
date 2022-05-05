@@ -58,8 +58,12 @@ const removeToken = async (refreshToken) => {
 
 const validateAccessToken = async (accessToken, ctx) => {
   try {
-    const userData = jwt.verify(accessToken, jwtAccessSecretKey);
-    return userData;
+    return jwt.verify(accessToken, jwtAccessSecretKey, (error, decoded) => {
+      if (error) {
+        throw new Error("User is unauthorized");
+      }
+      return decoded;
+    });
   } catch (error) {
     ctx.throw(401, error.message);
   }
@@ -67,9 +71,12 @@ const validateAccessToken = async (accessToken, ctx) => {
 
 const validateRefreshToken = async (refreshToken, ctx) => {
   try {
-    const userData = jwt.verify(refreshToken, jwtRefreshSecreKey);
-
-    return userData;
+    return jwt.verify(refreshToken, jwtRefreshSecreKey, (error, decoded) => {
+      if (error) {
+        throw new Error("User is unauthorized");
+      }
+      return decoded;
+    });
   } catch (error) {
     throw new Error(error);
   }
@@ -77,10 +84,9 @@ const validateRefreshToken = async (refreshToken, ctx) => {
 
 const findToken = async (token) => {
   try {
-    const tokenData = await db.query(
-      "SELECT * FROM token WHERE user_id = $1",
-      [token]
-    );
+    const tokenData = await db.query("SELECT * FROM token WHERE user_id = $1", [
+      token,
+    ]);
 
     return tokenData.rows[0];
   } catch (error) {
