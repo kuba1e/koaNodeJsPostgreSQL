@@ -137,7 +137,7 @@ const userRefreshToken = async (refreshToken) => {
 
     const userData = await validateRefreshToken(refreshToken);
     const tokenFromDb = await findToken(userData.id);
-    
+
     if (!userData || !tokenFromDb) {
       throw new Error("User is unauthorized");
     }
@@ -161,10 +161,54 @@ const userRefreshToken = async (refreshToken) => {
   }
 };
 
+const updateUserData = async (id, email, oldPassword, newPassword) => {
+  try {
+    const user = await db.query("SELECT * FROM users WHERE id = $1", [
+      id,
+    ]);
+
+    const isUserExist = isObjectEmpty(user.rows);
+
+    if (!isUserExist) {
+      throw new Error("Cannot find user with this email");
+    }
+
+    const isPasswordsEqual = await bcrypt.compare(
+      oldPassword,
+      user.rows[0].password
+    );
+
+    if (!isPasswordsEqual) {
+      throw new Error("Password is wrong");
+    }
+
+    const hashPassword = await bcrypt.hash(newPassword, 3);
+
+    const updatedUser = await db.query(
+      "UPDATE users SET email =$1, password=$2 WHERE id = $3 RETURNING *",
+      [email, hashPassword, id]
+    );
+
+    const userDto = new UserDto(updatedUser.rows[0]);
+
+    const tokens = generateTokens({ ...userDto });
+
+    await saveToken(userDto.id, tokens.refreshToken);
+
+    return {
+      ...tokens,
+      user: userDto,
+    };
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 module.exports = {
   userRegistration,
   userActivation,
   userLogout,
   userLogin,
   userRefreshToken,
+  updateUserData,
 };

@@ -4,6 +4,7 @@ const {
   userLogin,
   userLogout,
   userRefreshToken,
+  updateUserData,
 } = require("../models/userModel");
 
 const sendResponseWithCookies = (message, data, ctx) => {
@@ -87,10 +88,25 @@ const refresh = async (ctx, next) => {
   }
 };
 
+const update = async (ctx, next) => {
+  try {
+    const { email, oldPassword, newPassword } = ctx.request.body;
+    const { id } = ctx.params;
+    const userData = await updateUserData(id, email, oldPassword, newPassword);
+
+    sendResponseWithCookies("User was added successful", userData, ctx);
+
+    await next();
+  } catch (error) {
+    ctx.app.emit("error", error, ctx);
+  }
+};
+
 module.exports = {
   registration,
   login,
   logout,
   activate,
   refresh,
+  update,
 };

@@ -7,7 +7,7 @@ const jwtRefreshSecreKey = "this is an another secret key  ";
 
 const generateTokens = (payload) => {
   const accessToken = jwt.sign(payload, jwtAccessSecretKey, {
-    expiresIn: "20s",
+    expiresIn: "60s",
   });
 
   const refreshToken = jwt.sign(payload, jwtRefreshSecreKey, {
