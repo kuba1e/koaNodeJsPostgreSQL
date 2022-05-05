@@ -19,7 +19,7 @@ const registration = async (ctx, next) => {
     const { email, password } = ctx.request.body;
     const userData = await userRegistration(email, password);
 
-    sendResponseWithCookies("User was added successful", userData, ctx);
+    sendResponseWithCookies("User was added successful", {}, ctx);
 
     await next();
   } catch (error) {
@@ -90,9 +90,16 @@ const refresh = async (ctx, next) => {
 
 const update = async (ctx, next) => {
   try {
-    const { email, oldPassword, newPassword } = ctx.request.body;
+    const { email: newEmail, oldPassword, newPassword } = ctx.request.body;
+    const { email:currentEmail } = ctx.state.user;
     const { id } = ctx.params;
-    const userData = await updateUserData(id, email, oldPassword, newPassword);
+    const userData = await updateUserData(
+      id,
+      newEmail,
+      currentEmail,
+      oldPassword,
+      newPassword
+    );
 
     sendResponseWithCookies("User was added successful", userData, ctx);
 

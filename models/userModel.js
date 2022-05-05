@@ -161,16 +161,23 @@ const userRefreshToken = async (refreshToken) => {
   }
 };
 
-const updateUserData = async (id, email, oldPassword, newPassword) => {
+const updateUserData = async (
+  id,
+  newEmail,
+  currentEmail,
+  oldPassword,
+  newPassword
+) => {
   try {
-    const user = await db.query("SELECT * FROM users WHERE id = $1", [
-      id,
-    ]);
+    const user = await db.query("SELECT * FROM users WHERE id = $1", [id]);
 
     const isUserExist = isObjectEmpty(user.rows);
 
     if (!isUserExist) {
       throw new Error("Cannot find user with this email");
+    }
+    if (currentEmail !== user.rows[0].email) {
+      throw new Error("You can modify only your pesonnel data");
     }
 
     const isPasswordsEqual = await bcrypt.compare(
@@ -182,11 +189,14 @@ const updateUserData = async (id, email, oldPassword, newPassword) => {
       throw new Error("Password is wrong");
     }
 
-    const hashPassword = await bcrypt.hash(newPassword, 3);
+    const hashPassword = await bcrypt.hash(
+      newPassword ? newPassword : oldPassword,
+      3
+    );
 
     const updatedUser = await db.query(
       "UPDATE users SET email =$1, password=$2 WHERE id = $3 RETURNING *",
-      [email, hashPassword, id]
+      [newEmail, hashPassword, id]
     );
 
     const userDto = new UserDto(updatedUser.rows[0]);
