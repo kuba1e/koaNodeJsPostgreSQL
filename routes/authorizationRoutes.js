@@ -6,7 +6,6 @@ const {
   logout,
   activate,
   refresh,
-  update,
 } = require("../controllers/usersController");
 
 const authCheck = require("../middleware/authCheck");
@@ -22,7 +21,5 @@ router.post("/logout", logout);
 router.get("/activation/:link", activate);
 
 router.get("/refresh", refresh);
-
-router.put("/profile/:id", authCheck, update);
 
 module.exports = router;

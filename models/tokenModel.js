@@ -1,9 +1,10 @@
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const db = require("../db");
 
-const jwtAccessSecretKey = "this is a very secret key  ";
-const jwtRefreshSecreKey = "this is an another secret key  ";
+const jwtAccessSecretKey = process.env.ACCESS_SECRET_KEY;
+const jwtRefreshSecreKey = process.env.REFRESH_SECRET_KEY;
 
 const generateTokens = (payload) => {
   const accessToken = jwt.sign(payload, jwtAccessSecretKey, {

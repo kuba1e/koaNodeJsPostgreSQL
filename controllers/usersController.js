@@ -9,8 +9,12 @@ const {
 
 const sendResponseWithCookies = (message, data, ctx) => {
   ctx.body = { message, data };
+
   ctx.cookies.set("refreshToken", data.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
+    sameSite: "none",
+    httpOnly: true,
+    secure: false,
   });
 };
 
@@ -33,7 +37,7 @@ const login = async (ctx, next) => {
 
     const userData = await userLogin(email, password);
 
-    sendResponseWithCookies("User was logined successful", userData, ctx);
+    await sendResponseWithCookies("User was logined successful", userData, ctx);
 
     await next();
   } catch (error) {
@@ -47,7 +51,13 @@ const logout = async (ctx, next) => {
 
     await userLogout(refreshToken);
 
-    ctx.cookies.set("refreshToken", "");
+    ctx.cookies.set("refreshToken", "", {
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      sameSite: "none",
+      httpOnly: true,
+      secure: false,
+    });
+
     ctx.body = { message: "Logout succesful" };
 
     await next();
@@ -75,11 +85,7 @@ const refresh = async (ctx, next) => {
 
     const userData = await userRefreshToken(refreshToken, ctx);
 
-    await sendResponseWithCookies(
-      "Token was updated successful",
-      userData,
-      ctx
-    );
+    sendResponseWithCookies("Token was updated successful", userData, ctx);
 
     await next();
   } catch (error) {
@@ -91,7 +97,7 @@ const refresh = async (ctx, next) => {
 const update = async (ctx, next) => {
   try {
     const { email: newEmail, oldPassword, newPassword } = ctx.request.body;
-    const { email:currentEmail } = ctx.state.user;
+    const { email: currentEmail } = ctx.state.user;
     const { id } = ctx.params;
     const userData = await updateUserData(
       id,

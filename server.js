@@ -5,6 +5,7 @@ const cookieParser = require("koa-cookie");
 
 const todoRouter = require("./routes/todosRoutes");
 const authorizationRoutes = require("./routes/authorizationRoutes");
+const userRoutes = require("./routes/userRoutes");
 const logger = require("./middleware/logger");
 
 const app = new Koa();
@@ -15,7 +16,7 @@ app.use(cookieParser.default());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3000",
+    origin: 'http://localhost:3000',
   })
 );
 app.use(BodyParser());
@@ -23,13 +24,14 @@ app.use(logger);
 
 app.use(todoRouter.routes()).use(todoRouter.allowedMethods());
 app.use(authorizationRoutes.routes()).use(authorizationRoutes.allowedMethods());
+app.use(userRoutes.routes()).use(userRoutes.allowedMethods());
 
 app.on("error", (error, ctx) => {
   ctx.status = error.statusCode || error.status || 500;
   ctx.body = {
     message: error.message,
   };
- // console.log(error);
+   console.log(error);
 });
 
 app.listen(PORT, () => {
