@@ -23,7 +23,7 @@ const registration = async (ctx, next) => {
     const { email, password } = ctx.request.body;
     const userData = await userRegistration(email, password);
 
-    sendResponseWithCookies("User was added successful", {}, ctx);
+    sendResponseWithCookies("User was added successful", userData, ctx);
 
     await next();
   } catch (error) {
@@ -89,7 +89,6 @@ const refresh = async (ctx, next) => {
 
     await next();
   } catch (error) {
-    console.log(error);
     ctx.app.emit("error", error, ctx);
   }
 };
