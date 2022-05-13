@@ -1,9 +1,9 @@
 const db = require("../db");
 const types = require("pg").types;
 
-types.setTypeParser(types.builtins.NUMERIC, function(val) {
-  return parseInt(val, 10)
-})
+types.setTypeParser(types.builtins.NUMERIC, function (val) {
+  return parseFloat(val, 10);
+});
 
 const findAll = async (userId) => {
   try {
@@ -54,13 +54,14 @@ const update = async (userId, id, data) => {
   }
 };
 
-const updateAll = async (userId, data) => {
+const updateAll = async (userId, todos) => {
   try {
-    const { done } = data;
-    return await db.query(
-      "UPDATE todos SET done =$1 WHERE user_id = $2 RETURNING *",
-      [done, userId]
-    );
+    await todos.map(async ({ id, label, order_num, done }) => {
+      return await db.query(
+        "UPDATE todos SET done =$1, label= $2, order_num=$3 WHERE user_id = $4  AND id=$5 RETURNING *",
+        [done, label, order_num, userId, id]
+      );
+    });
   } catch (error) {
     throw new Error(error.message);
   }

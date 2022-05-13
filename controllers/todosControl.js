@@ -60,19 +60,16 @@ const updateTodo = async (ctx, next) => {
 
 const updateAllTodo = async (ctx, next) => {
   try {
-    const data = ctx.request.body;
+    const { todos } = ctx.request.body;
     const { id: userId } = ctx.state.user;
 
-    const updatedTodo = await Todos.updateAll(userId, data);
-    if (updatedTodo.rows.length) {
-      ctx.body = { message: "Todo updated successful" };
-    } else {
-      ctx.body = { message: "Can't find todo with this ID" };
-    }
+    await Todos.updateAll(userId, todos);
+
+    ctx.body = { message: "Todo updated successful" };
 
     await next();
   } catch (error) {
-    ctx.app.emit("error", error, ctx);
+    ctx.app.emit("error", { message: "Can't find todo with this ID" }, ctx);
   }
 };
 
