@@ -47,7 +47,7 @@ httpServer.listen(PORT, () => {
 });
 
 const io = new Server(httpServer, {
-  cors: { origin: "http://localhost:3000", credentials: true },
+  cors: { origin: "91.225.171.177", credentials: true },
 });
 
 io.use(authWebScocketCheck);
