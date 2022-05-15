@@ -21099,3 +21099,13 @@
 [2022-5-15 19:30:33] method=PUT path="/todos/104" request-duration=0.0018ms
 [2022-5-15 19:30:35] method=DELETE path="/todos/104" request-duration=0.0014ms
 [2022-5-15 19:30:41] method=POST path="/todos" request-duration=0.0016ms
+[2022-5-15 19:37:2] method=GET path="/refresh" request-duration=0.0279ms
+[2022-5-15 19:37:3] method=GET path="/refresh" request-duration=0.0037ms
+[2022-5-15 19:37:4] method=GET path="/refresh" request-duration=0.0035ms
+[2022-5-15 19:37:7] method=GET path="/refresh" request-duration=0.0034ms
+[2022-5-15 19:37:8] method=GET path="/todos" request-duration=0.0038ms
+[2022-5-15 19:37:10] method=GET path="/todos" request-duration=0.0032ms
+[2022-5-15 19:37:12] method=PUT path="/todos" request-duration=0.0036ms
+[2022-5-15 19:37:13] method=PUT path="/todos" request-duration=0.0033ms
+[2022-5-15 19:37:15] method=PUT path="/todos/102" request-duration=0.0039ms
+[2022-5-15 19:37:16] method=PUT path="/todos" request-duration=0.0201ms
