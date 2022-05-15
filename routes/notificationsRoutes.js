@@ -12,11 +12,6 @@ const router = new Router({
 
 router.use(authCheck);
 
-router.get("/", getNotifications);
-/*
-router.delete("/", deleteCompletedTodo);
 
-router.delete("/:id", deleteTodo);
-*/
 
 module.exports = router;

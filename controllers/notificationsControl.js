@@ -4,7 +4,10 @@ const getNotifications = async (ctx, next) => {
   try {
     const { id: userId } = ctx.state.user;
     const notifications = await Notifications.findAll(userId);
-    ctx.body = { message: "Notifications found successful", data: { notifications } };
+    ctx.body = {
+      message: "Notifications found successful",
+      data: { notifications },
+    };
 
     await next();
   } catch (error) {
@@ -12,9 +15,6 @@ const getNotifications = async (ctx, next) => {
   }
 };
 
-
-
-
-module.exports ={
-  getNotifications
-}
+module.exports = {
+  getNotifications,
+};
