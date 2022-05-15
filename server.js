@@ -22,7 +22,7 @@ const PORT = process.env.PORT;
 app.use(cookieParser.default());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://adaptive123.herokuapp.com",
     credentials: true,
   })
 );
@@ -47,7 +47,7 @@ httpServer.listen(PORT, () => {
 });
 
 const io = new Server(httpServer, {
-  cors: { origin: "http://localhost:3000", credentials: true },
+  cors: { origin: "https://adaptive123.herokuapp.com", credentials: true },
 });
 
 io.use(authWebScocketCheck);
