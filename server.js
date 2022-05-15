@@ -10,13 +10,14 @@ require("dotenv").config();
 const todoRouter = require("./routes/todosRoutes");
 const authorizationRoutes = require("./routes/authorizationRoutes");
 const userRoutes = require("./routes/userRoutes");
+const notificationsRoutes = require("./routes/notificationsRoutes");
 const logger = require("./middleware/logger");
 const authWebScocketCheck = require("./middleware/authWebSocketCheck");
 
 const app = new Koa();
 const httpServer = http.createServer(app.callback());
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 
 app.use(cookieParser.default());
 app.use(
@@ -31,6 +32,7 @@ app.use(logger);
 app.use(todoRouter.routes()).use(todoRouter.allowedMethods());
 app.use(authorizationRoutes.routes()).use(authorizationRoutes.allowedMethods());
 app.use(userRoutes.routes()).use(userRoutes.allowedMethods());
+app.use(notificationsRoutes.routes()).use(notificationsRoutes.allowedMethods());
 
 app.on("error", (error, ctx) => {
   ctx.status = error.statusCode || error.status || 500;
@@ -55,17 +57,16 @@ io.on("connection", (socket) => {
   const userId = socket.data.user.id;
   socket.join(userId);
 
-  socket.on("add-todo", (data) => {
-    socket.to(userId).emit("added-todo", data);
+  socket.on("add-todo", (payload) => {
+    socket.to(userId).emit("added-todo", payload.data);
   });
 
-  socket.on("edit-todo", (data) => {
-    console.log(data);
-    socket.to(userId).emit("edited-todo", data);
+  socket.on("edit-todo", (payload) => {
+    socket.to(userId).emit("edited-todo", payload.data);
   });
 
-  socket.on("delete-todo", (data) => {
-    socket.to(userId).emit("deleted-todo", data);
+  socket.on("delete-todo", (payload) => {
+    socket.to(userId).emit("deleted-todo", payload.data);
   });
 
   socket.on("delete-completed", () => {

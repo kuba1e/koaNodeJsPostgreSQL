@@ -28,9 +28,15 @@ const createTodo = async (ctx, next) => {
   try {
     const { id: userId } = ctx.state.user;
     const data = ctx.request.body;
-    const newTodo = await Todos.create(userId, data);
-    if (newTodo) {
-      ctx.body = { message: "Todo added successful", data: newTodo.rows[0] };
+    const dbResponse = await Todos.create(userId, data);
+    if (dbResponse) {
+      ctx.body = {
+        message: "Todo added successful",
+        data: {
+          data: dbResponse.data,
+          notification: dbResponse.notification,
+        },
+      };
     }
 
     await next();
@@ -46,8 +52,9 @@ const updateTodo = async (ctx, next) => {
     const { id: userId } = ctx.state.user;
 
     const updatedTodo = await Todos.update(userId, id, data);
-    if (updatedTodo.rows.length) {
-      ctx.body = { message: "Todo updated successful" };
+
+    if (updatedTodo) {
+      ctx.body = { message: "Todo updated successful", data: updatedTodo };
     } else {
       ctx.body = { message: "Can't find todo with this ID" };
     }
@@ -78,9 +85,9 @@ const deleteTodo = async (ctx, next) => {
     const id = ctx.params.id;
     const { id: userId } = ctx.state.user;
 
-    const data = await Todos.remove(userId, id);
-    if (data.rows.length) {
-      ctx.body = { message: "Deleted successful" };
+    const deletedTodo = await Todos.remove(userId, id);
+    if (deleteTodo) {
+      ctx.body = { message: "Deleted successful", data: deletedTodo };
     } else {
       ctx.body = { message: "Can't find todo with this ID" };
     }

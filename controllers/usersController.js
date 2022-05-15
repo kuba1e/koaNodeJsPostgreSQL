@@ -7,10 +7,12 @@ const {
   updateUserData,
 } = require("../models/userModel");
 
+const { findAll } = require("../models/notificationsModels");
+
 const sendResponseWithCookies = (message, data, ctx) => {
   ctx.body = { message, data };
 
-  ctx.cookies.set("refreshToken", data.refreshToken, {
+  ctx.cookies.set("refreshToken", data.userInfo.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     sameSite: "lax",
     httpOnly: true,
@@ -23,7 +25,7 @@ const registration = async (ctx, next) => {
     const { email, password } = ctx.request.body;
     const userData = await userRegistration(email, password);
 
-    sendResponseWithCookies("User was added successful", userData, ctx);
+    sendResponseWithCookies("User was added successful", {userInfo:userData}, ctx);
 
     await next();
   } catch (error) {
@@ -36,8 +38,13 @@ const login = async (ctx, next) => {
     const { email, password } = ctx.request.body;
 
     const userData = await userLogin(email, password);
+    const userNotifications = await findAll(userData.user.id);
 
-    await sendResponseWithCookies("User was logined successful", userData, ctx);
+    await sendResponseWithCookies(
+      "User was logined successful",
+      { userInfo: userData, notifications: userNotifications },
+      ctx
+    );
 
     await next();
   } catch (error) {
@@ -85,7 +92,13 @@ const refresh = async (ctx, next) => {
 
     const userData = await userRefreshToken(refreshToken, ctx);
 
-    sendResponseWithCookies("Token was updated successful", userData, ctx);
+    const userNotifications = await findAll(userData.user.id);
+
+    sendResponseWithCookies(
+      "Token was updated successful",
+      { userInfo: userData, notifications: userNotifications },
+      ctx
+    );
 
     await next();
   } catch (error) {

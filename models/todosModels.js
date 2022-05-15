@@ -33,13 +33,19 @@ const find = async (userId, id) => {
 const create = async (userId, data) => {
   try {
     const { label, done, order_num } = data;
-    const newTodo= await db.query(
+    const newTodo = await db.query(
       "INSERT INTO todos (label, done, user_id, order_num) values ($1, $2, $3, $4) RETURNING *",
       [label, done, userId, order_num]
     );
-console.log(newTodo.rows[0])
+    const message = await db.query(
+      "INSERT INTO notifications (type, message, user_id) values ($1, $2, $3) RETURNING *",
+      ["add", JSON.stringify(newTodo.rows[0]), userId]
+    );
 
-    return newTodo
+    return {
+      data: newTodo.rows[0],
+      notification: message.rows[0],
+    };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -48,10 +54,21 @@ console.log(newTodo.rows[0])
 const update = async (userId, id, data) => {
   try {
     const { label, done, order_num } = data;
-    return await db.query(
+    const updatedTodo = await db.query(
       "UPDATE todos SET label = $1, done =$2, order_num=$5 WHERE id =$3 AND user_id=$4 RETURNING *",
       [label, done, id, userId, order_num]
     );
+
+    const message =  await db.query(
+      "INSERT INTO notifications (type, message, user_id) values ($1, $2, $3) RETURNING *",
+      ["edit", JSON.stringify(updatedTodo.rows[0]), userId]
+    );
+
+    console.log(message.rows[0])
+    return {
+      data: updatedTodo.rows[0],
+      notification: message.rows[0],
+    };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -72,11 +89,19 @@ const updateAll = async (userId, todos) => {
 
 const remove = async (userId, id) => {
   try {
-    return await db.query(
+    const deletedTodo = await db.query(
       "DELETE from todos WHERE id=$1 AND user_id=$2 RETURNING *",
       [id, userId]
     );
-  } catch (error) {
+    const message = await db.query(
+      "INSERT INTO notifications (type, message, user_id) values ($1, $2,$3)  RETURNING *",
+      ["delete", JSON.stringify(deletedTodo.rows[0]), userId]
+    );
+
+    return {
+      data: deletedTodo.rows[0],
+      notification: message.rows[0],
+    };  } catch (error) {
     throw new Error(error.message);
   }
 };

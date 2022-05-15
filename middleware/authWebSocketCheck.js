@@ -26,7 +26,6 @@ const authWebScocketCheck = async (socket, next) => {
     return  await next(error);
     }
 
-    console.log(userData)
     socket.data.user = userData;
     await next();
   } catch (error) {
