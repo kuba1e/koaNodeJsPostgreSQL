@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
-
+require("dotenv").config();
 const db = require("../db");
 
-const jwtAccessSecretKey = "this is a very secret key  ";
-const jwtRefreshSecreKey = "this is an another secret key  ";
+const jwtAccessSecretKey = "this is a very secret key  "; //process.env.ACCESS_SECRET_KEY;
+const jwtRefreshSecreKey = "this is an another secret key  "; //process.env.REFRESH_SECRET_KEY;
 
 const generateTokens = (payload) => {
   const accessToken = jwt.sign(payload, jwtAccessSecretKey, {
@@ -56,30 +56,50 @@ const removeToken = async (refreshToken) => {
   }
 };
 
-const validateAccessToken = async (accessToken) => {
+const validateAccessToken = async (accessToken, ctx) => {
   try {
-    const userData = jwt.verify(accessToken, jwtAccessSecretKey);
-    return userData;
+    return jwt.verify(accessToken, jwtAccessSecretKey, (error, decoded) => {
+      if (error) {
+        throw new Error("User is unauthorized");
+      }
+      return decoded;
+    });
   } catch (error) {
-    throw new Error(error.message);
+    ctx.throw(401, "User is unauthorized");
   }
 };
 
-const validateRefreshToken = async (refreshToken) => {
+const validateAccessTokenSocket = async (accessToken) => {
   try {
-    const userData = jwt.verify(refreshToken, jwtRefreshSecreKey);
-    return userData;
+    return jwt.verify(accessToken, jwtAccessSecretKey, (error, decoded) => {
+      if (error) {
+        throw new Error("User is unauthorized");
+      }
+      return decoded;
+    });
   } catch (error) {
-    throw new Error(error.message);
+    //ctx.throw(401, "User is unauthorized");
+  }
+};
+
+const validateRefreshToken = async (refreshToken, ctx) => {
+  try {
+    return jwt.verify(refreshToken, jwtRefreshSecreKey, (error, decoded) => {
+      if (error) {
+        throw new Error("User is unauthorized");
+      }
+      return decoded;
+    });
+  } catch (error) {
+    ctx.throw(401, "User is unauthorized");
   }
 };
 
 const findToken = async (token) => {
   try {
-    const tokenData = await db.query(
-      "SELECT * FROM token WHERE refresh_token = $1",
-      [token]
-    );
+    const tokenData = await db.query("SELECT * FROM token WHERE user_id = $1", [
+      token,
+    ]);
 
     return tokenData.rows[0];
   } catch (error) {
@@ -92,6 +112,7 @@ module.exports = {
   saveToken,
   removeToken,
   validateAccessToken,
+  validateAccessTokenSocket,
   validateRefreshToken,
   findToken,
 };

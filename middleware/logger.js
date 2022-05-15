@@ -39,8 +39,6 @@ const logger = async (ctx, next) => {
       }
     });
 
-    console.log(log);
-
     await next();
   } catch (error) {
     ctx.app.emit("error", error.message, ctx);

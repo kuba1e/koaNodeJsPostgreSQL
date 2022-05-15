@@ -8,6 +8,8 @@ const {
   refresh,
 } = require("../controllers/usersController");
 
+const authCheck = require("../middleware/authCheck");
+
 const router = new Router();
 
 router.post("/registration", registration);
