@@ -23,7 +23,6 @@ app.use(cookieParser.default());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3000",
   })
 );
 app.use(BodyParser());
@@ -47,7 +46,7 @@ httpServer.listen(PORT, () => {
 });
 
 const io = new Server(httpServer, {
-  cors: { origin: "91.225.171.177", credentials: true },
+  cors: { credentials: true },
 });
 
 io.use(authWebScocketCheck);
