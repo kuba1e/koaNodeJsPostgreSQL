@@ -12,7 +12,7 @@ const sendResponseWithCookies = (message, data, ctx) => {
 
   ctx.cookies.set("refreshToken", data.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    sameSite: "none",
+    sameSite: "lax",
     httpOnly: true,
     secure: false,
   });

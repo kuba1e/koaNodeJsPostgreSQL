@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-
+require("dotenv").config();
 const db = require("../db");
 
 const jwtAccessSecretKey = process.env.ACCESS_SECRET_KEY;
@@ -7,7 +7,7 @@ const jwtRefreshSecreKey = process.env.REFRESH_SECRET_KEY;
 
 const generateTokens = (payload) => {
   const accessToken = jwt.sign(payload, jwtAccessSecretKey, {
-    expiresIn: "60s",
+    expiresIn: "30m",
   });
 
   const refreshToken = jwt.sign(payload, jwtRefreshSecreKey, {
@@ -65,7 +65,20 @@ const validateAccessToken = async (accessToken, ctx) => {
       return decoded;
     });
   } catch (error) {
-    ctx.throw(401, error.message);
+    ctx.throw(401, "User is unauthorized");
+  }
+};
+
+const validateAccessTokenSocket = async (accessToken) => {
+  try {
+    return jwt.verify(accessToken, jwtAccessSecretKey, (error, decoded) => {
+      if (error) {
+        throw new Error("User is unauthorized");
+      }
+      return decoded;
+    });
+  } catch (error) {
+    //ctx.throw(401, "User is unauthorized");
   }
 };
 
@@ -78,7 +91,7 @@ const validateRefreshToken = async (refreshToken, ctx) => {
       return decoded;
     });
   } catch (error) {
-    throw new Error(error);
+    ctx.throw(401, "User is unauthorized");
   }
 };
 
@@ -99,6 +112,7 @@ module.exports = {
   saveToken,
   removeToken,
   validateAccessToken,
+  validateAccessTokenSocket,
   validateRefreshToken,
   findToken,
 };

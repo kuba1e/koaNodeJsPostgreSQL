@@ -33,10 +33,13 @@ const find = async (userId, id) => {
 const create = async (userId, data) => {
   try {
     const { label, done, order_num } = data;
-    return await db.query(
+    const newTodo= await db.query(
       "INSERT INTO todos (label, done, user_id, order_num) values ($1, $2, $3, $4) RETURNING *",
       [label, done, userId, order_num]
     );
+console.log(newTodo.rows[0])
+
+    return newTodo
   } catch (error) {
     throw new Error(error.message);
   }
