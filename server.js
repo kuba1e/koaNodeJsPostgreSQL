@@ -76,5 +76,11 @@ io.on("connection", (socket) => {
   socket.on("update-all-todo", (data) => {
     socket.to(userId).emit("updated-all-todo", data);
   });
+
+  socket.on('delete-notification', (data)=>{
+    socket.to(userId).emit("deleted-notification", data);
+  })
+
+
   socket.on("disconnect", () => {});
 });

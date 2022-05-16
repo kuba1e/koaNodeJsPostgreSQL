@@ -19,16 +19,11 @@ const findAll = async (userId) => {
 
 const remove = async (userId, id) => {
   try {
-    const deletedTodo = await db.query(
-      "DELETE from notifications WHERE message ->'userId' = $1 AND message ->'id' = $2 RETURNING *",
-      [id, userId]
+    const deletedNotification = await db.query(
+      "DELETE from notifications WHERE user_id=$1 AND id = $2 RETURNING *",
+      [userId, id]
     );
-    await db.query(
-      "INSERT INTO notifications (type, message) values ($1, $2)",
-      ["delete", JSON.stringify(deletedTodo.rows[0])]
-    );
-
-    return deletedTodo;
+    return deletedNotification.rows[0];
   } catch (error) {
     throw new Error(error.message);
   }
@@ -36,4 +31,5 @@ const remove = async (userId, id) => {
 
 module.exports = {
   findAll,
+  remove,
 };

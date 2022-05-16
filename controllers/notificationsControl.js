@@ -1,13 +1,16 @@
 const Notifications = require("../models/notificationsModels");
 
-const getNotifications = async (ctx, next) => {
+const deleteNotification = async (ctx, next) => {
   try {
+    const id = ctx.params.id;
     const { id: userId } = ctx.state.user;
-    const notifications = await Notifications.findAll(userId);
-    ctx.body = {
-      message: "Notifications found successful",
-      data: { notifications },
-    };
+
+    const deletedNotification = await Notifications.remove(userId, id);
+    if (deletedNotification) {
+      ctx.body = { message: "Deleted successful", data: deletedNotification };
+    } else {
+      ctx.body = { message: "Can't find todo with this ID" };
+    }
 
     await next();
   } catch (error) {
@@ -16,5 +19,5 @@ const getNotifications = async (ctx, next) => {
 };
 
 module.exports = {
-  getNotifications,
+  deleteNotification,
 };

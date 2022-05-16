@@ -5,6 +5,8 @@ types.setTypeParser(types.builtins.NUMERIC, function (val) {
   return parseFloat(val, 10);
 });
 
+
+
 const findAll = async (userId) => {
   try {
     const data = await db.query("SELECT * FROM todos WHERE user_id=$1", [

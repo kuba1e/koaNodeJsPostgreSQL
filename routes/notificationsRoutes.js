@@ -2,9 +2,7 @@ const Router = require("@koa/router");
 
 const authCheck = require("../middleware/authCheck");
 
-const {
-  getNotifications
-} = require("../controllers/notificationsControl");
+const { deleteNotification } = require("../controllers/notificationsControl");
 
 const router = new Router({
   prefix: "/notifications",
@@ -12,6 +10,6 @@ const router = new Router({
 
 router.use(authCheck);
 
-
+router.delete("/:id", deleteNotification);
 
 module.exports = router;
