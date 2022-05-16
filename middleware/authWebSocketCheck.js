@@ -1,21 +1,20 @@
-
 const { validateAccessTokenSocket } = require("../models/tokenModel");
 
-const authWebScocketCheck = async (socket, next) => {
+const authWebSocketCheck = async (socket, next) => {
   try {
     const authorizationHeader = socket.request.headers.authorization;
 
     if (!authorizationHeader) {
       const error = new Error("User is unauthorized");
       error.status = 401;
-    return  await next(error);
+      return await next(error);
     }
 
     const accessToken = authorizationHeader.split(" ")[1];
     if (!accessToken) {
       const error = new Error("User is unauthorized");
       error.status = 401;
-    return  await next(error);
+      return await next(error);
     }
 
     const userData = await validateAccessTokenSocket(accessToken);
@@ -23,7 +22,7 @@ const authWebScocketCheck = async (socket, next) => {
     if (!userData) {
       const error = new Error("User is unauthorized");
       error.status = 401;
-    return  await next(error);
+      return await next(error);
     }
 
     socket.data.user = userData;
@@ -33,4 +32,4 @@ const authWebScocketCheck = async (socket, next) => {
   }
 };
 
-module.exports = authWebScocketCheck;
+module.exports = authWebSocketCheck;

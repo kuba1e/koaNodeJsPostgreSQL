@@ -12,7 +12,7 @@ const authorizationRoutes = require("./routes/authorizationRoutes");
 const userRoutes = require("./routes/userRoutes");
 const notificationsRoutes = require("./routes/notificationsRoutes");
 const logger = require("./middleware/logger");
-const authWebScocketCheck = require("./middleware/authWebSocketCheck");
+const authWebSocketCheck = require("./middleware/authWebSocketCheck");
 
 const app = new Koa();
 const httpServer = http.createServer(app.callback());
@@ -29,6 +29,26 @@ app.use(
 app.use(BodyParser());
 app.use(logger);
 
+httpServer.listen(PORT, () => {
+  console.log("server has been started");
+});
+
+const io = new Server(httpServer, {
+  cors: { origin: "http://localhost:3000", credentials: true },
+});
+
+app.use(async (ctx, next) => {
+  ctx.io = io;
+  await next();
+});
+
+io.use(authWebSocketCheck);
+
+io.on("connection", (socket) => {
+  console.log("connected successful");
+  socket.join(socket.id);
+});
+
 app.use(todoRouter.routes()).use(todoRouter.allowedMethods());
 app.use(authorizationRoutes.routes()).use(authorizationRoutes.allowedMethods());
 app.use(userRoutes.routes()).use(userRoutes.allowedMethods());
@@ -40,47 +60,4 @@ app.on("error", (error, ctx) => {
     message: error.message,
   };
   console.log(error);
-});
-
-httpServer.listen(PORT, () => {
-  console.log("server has been started");
-});
-
-const io = new Server(httpServer, {
-  cors: { origin: "http://localhost:3000", credentials: true },
-});
-
-io.use(authWebScocketCheck);
-
-io.on("connection", (socket) => {
-  console.log("connected successful");
-  const userId = socket.data.user.id;
-  socket.join(userId);
-
-  socket.on("add-todo", (payload) => {
-    socket.to(userId).emit("added-todo", payload.data);
-  });
-
-  socket.on("edit-todo", (payload) => {
-    socket.to(userId).emit("edited-todo", payload.data);
-  });
-
-  socket.on("delete-todo", (payload) => {
-    socket.to(userId).emit("deleted-todo", payload.data);
-  });
-
-  socket.on("delete-completed", () => {
-    socket.to(userId).emit("deleted-completed");
-  });
-
-  socket.on("update-all-todo", (data) => {
-    socket.to(userId).emit("updated-all-todo", data);
-  });
-
-  socket.on('delete-notification', (data)=>{
-    socket.to(userId).emit("deleted-notification", data);
-  })
-
-
-  socket.on("disconnect", () => {});
 });

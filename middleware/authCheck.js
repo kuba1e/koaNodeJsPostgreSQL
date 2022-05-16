@@ -18,7 +18,7 @@ const authCheck = async (ctx, next) => {
       ctx.throw(401, "User is unauthorized");
     }
 
-    ctx.state.user = userData;
+    ctx.state.user = { userData, socketId: ctx.header.socketid };
 
     await next();
   } catch (error) {

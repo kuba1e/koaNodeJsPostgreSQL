@@ -25,7 +25,11 @@ const registration = async (ctx, next) => {
     const { email, password } = ctx.request.body;
     const userData = await userRegistration(email, password);
 
-    sendResponseWithCookies("User was added successful", {userInfo:userData}, ctx);
+    sendResponseWithCookies(
+      "User was added successful",
+      { userInfo: userData },
+      ctx
+    );
 
     await next();
   } catch (error) {
@@ -88,6 +92,7 @@ const activate = async (ctx, next) => {
 
 const refresh = async (ctx, next) => {
   try {
+    // console.log(ctx.socket.data)
     const refreshToken = ctx.cookies.get("refreshToken");
 
     const userData = await userRefreshToken(refreshToken, ctx);
