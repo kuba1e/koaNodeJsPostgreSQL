@@ -7,7 +7,7 @@ const {
   updateUserData,
 } = require("../models/userModel");
 
-const { findAll } = require("../models/notificationsModels");
+const { findAllActive } = require("../models/notificationsModels");
 
 const sendResponseWithCookies = (message, data, ctx) => {
   ctx.body = { message, data };
@@ -42,7 +42,7 @@ const login = async (ctx, next) => {
     const { email, password } = ctx.request.body;
 
     const userData = await userLogin(email, password);
-    const userNotifications = await findAll(userData.user.id);
+    const userNotifications = await findAllActive(userData.user.id);
 
     await sendResponseWithCookies(
       "User was logined successful",
@@ -97,7 +97,7 @@ const refresh = async (ctx, next) => {
 
     const userData = await userRefreshToken(refreshToken, ctx);
 
-    const userNotifications = await findAll(userData.user.id);
+    const userNotifications = await findAllActive(userData.user.id);
 
     sendResponseWithCookies(
       "Token was updated successful",

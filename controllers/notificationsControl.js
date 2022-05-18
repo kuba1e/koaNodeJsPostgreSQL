@@ -21,6 +21,27 @@ const deleteNotification = async (ctx, next) => {
   }
 };
 
+const getNotifications = async (ctx, next) => {
+  try {
+    const { id: userId } = ctx.state.user.userData;
+
+    const notifications = await Notifications.findAll(userId);
+    if (notifications) {
+      ctx.body = {
+        message: "Found notifications successful",
+        data: notifications,
+      };
+    } else {
+      ctx.body = { message: "Can't find any notifications" };
+    }
+
+    await next();
+  } catch (error) {
+    ctx.app.emit("error", error, ctx);
+  }
+};
+
 module.exports = {
   deleteNotification,
+  getNotifications,
 };

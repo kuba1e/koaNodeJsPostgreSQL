@@ -12,7 +12,6 @@ const authorizationRoutes = require("./routes/authorizationRoutes");
 const userRoutes = require("./routes/userRoutes");
 const notificationsRoutes = require("./routes/notificationsRoutes");
 const logger = require("./middleware/logger");
-const authWebSocketCheck = require("./middleware/authWebSocketCheck");
 
 const app = new Koa();
 const httpServer = http.createServer(app.callback());
@@ -41,8 +40,6 @@ app.use(async (ctx, next) => {
   ctx.io = io;
   await next();
 });
-
-io.use(authWebSocketCheck);
 
 io.on("connection", (socket) => {
   console.log("connected successful");

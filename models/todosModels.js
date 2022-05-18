@@ -1,11 +1,11 @@
 const db = require("../db");
 const types = require("pg").types;
 
+const { getCurrentDate } = require("../helpers/helpers");
+
 types.setTypeParser(types.builtins.NUMERIC, function (val) {
   return parseFloat(val, 10);
 });
-
-
 
 const findAll = async (userId) => {
   try {
@@ -39,9 +39,10 @@ const create = async (userId, data) => {
       "INSERT INTO todos (label, done, user_id, order_num) values ($1, $2, $3, $4) RETURNING *",
       [label, done, userId, order_num]
     );
+
     const message = await db.query(
-      "INSERT INTO notifications (type, message, user_id) values ($1, $2, $3) RETURNING *",
-      ["add", JSON.stringify(newTodo.rows[0]), userId]
+      "INSERT INTO notifications (type, message, user_id, hidden, date) values ($1, $2, $3,$4, $5) RETURNING *",
+      ["add", JSON.stringify(newTodo.rows[0]), userId, false, getCurrentDate()]
     );
 
     return {
@@ -61,12 +62,18 @@ const update = async (userId, id, data) => {
       [label, done, id, userId, order_num]
     );
 
-    const message =  await db.query(
-      "INSERT INTO notifications (type, message, user_id) values ($1, $2, $3) RETURNING *",
-      ["edit", JSON.stringify(updatedTodo.rows[0]), userId]
+    const message = await db.query(
+      "INSERT INTO notifications (type, message, user_id, hidden, date) values ($1, $2, $3, $4, $5) RETURNING *",
+      [
+        "edit",
+        JSON.stringify(updatedTodo.rows[0]),
+        userId,
+        false,
+        getCurrentDate(),
+      ]
     );
 
-    console.log(message.rows[0])
+    console.log(message.rows[0]);
     return {
       data: updatedTodo.rows[0],
       notification: message.rows[0],
@@ -95,15 +102,23 @@ const remove = async (userId, id) => {
       "DELETE from todos WHERE id=$1 AND user_id=$2 RETURNING *",
       [id, userId]
     );
+    console.log(deletedTodo.rows[0]);
     const message = await db.query(
-      "INSERT INTO notifications (type, message, user_id) values ($1, $2,$3)  RETURNING *",
-      ["delete", JSON.stringify(deletedTodo.rows[0]), userId]
+      "INSERT INTO notifications (type, message, user_id, hidden, date) values ($1, $2,$3, $4, $5)  RETURNING *",
+      [
+        "delete",
+        JSON.stringify(deletedTodo.rows[0]),
+        userId,
+        false,
+        getCurrentDate(),
+      ]
     );
 
     return {
       data: deletedTodo.rows[0],
       notification: message.rows[0],
-    };  } catch (error) {
+    };
+  } catch (error) {
     throw new Error(error.message);
   }
 };
